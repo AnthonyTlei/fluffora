@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { ThemeProvider } from "next-themes";
+import ReactQueryProvider from "./ReactQueryProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -13,10 +15,11 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | FluffBattles",
-    default: "FluffBattles",
+    template: "%s | Fluff Battles",
+    default: "Fluff Battles",
   },
-  description: "The card battle game for fluffers",
+  description:
+    "Fluff Battles is an adorable and exciting card game where players collect and battle with custom characters inspired by fluffy, cute plushies. Each character card features unique stats and abilities, allowing for strategic play and endless fun. Designed to be both lighthearted and competitive, Fluff Battles brings the charm of plush toys into a colorful and engaging digital world, where players can create their own custom cards and challenge others in friendly, fluff-filled showdowns!",
 };
 
 export default function RootLayout({
@@ -27,7 +30,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+        <ReactQueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );
