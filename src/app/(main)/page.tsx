@@ -1,9 +1,13 @@
 import coverImage from "@/assets/cover/cover-image-1.webp";
+import { validateRequest } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function Page() {
+export default async function Page() {
+  const { user: loggedInUser } = await validateRequest();
+
   return (
     <main className="flex w-full min-w-0 gap-5">
       <Image
@@ -21,7 +25,7 @@ export default function Page() {
               size={"lg"}
               className="w-[75%] sm:w-[50%]"
             >
-              My Fluffs
+              <Link href={`/users/${loggedInUser?.id}/fluffs`}>My Fluffs</Link>
             </Button>
           </CardContent>
         </Card>

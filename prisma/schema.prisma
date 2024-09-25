@@ -23,8 +23,21 @@ model User {
     sessions    Session[]
 
     createdAt DateTime @default(now())
+    Fluff     Fluff[]
 
     @@map("users")
+}
+
+model Fluff {
+    id          String  @id
+    userId      String
+    user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    displayName String
+    imageUrl    String?
+
+    createdAt DateTime @default(now())
+
+    @@map("fluffs")
 }
 
 model Session {
