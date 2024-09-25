@@ -5,21 +5,21 @@ import logo from "@/assets/logo/logo.webp";
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-10 bg-card shadow-sm">
+    <header className="sticky top-0 z-10 bg-card shadow-lg">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-5 py-0 sm:justify-center">
         <Link href="/" className="p-0 text-2xl font-bold text-primary">
-          <div className="flex h-16 items-center justify-center gap-4 p-0">
+          <div className="flex h-14 items-center justify-center gap-4 p-0 sm:h-16">
             <Image
               src={logo}
               alt="logo"
               width={400}
               height={400}
-              className="h-12 w-12 rounded-full object-cover"
+              className="aspect-square h-10 w-10 rounded-full object-cover sm:h-12 sm:w-12"
             />
-            <span className="text-xl font-bold">Fluff Battles</span>
+            <span className="text-lg font-bold sm:text-xl">Fluff Battles</span>
           </div>
         </Link>
-        <UserButton className="hidden sm:ms-auto md:flex" />
+        <UserButton className="ms-auto flex" />
       </div>
     </header>
   );

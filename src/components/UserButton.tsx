@@ -52,7 +52,7 @@ export default function UserButton({
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>Logged in as @{user.displayName}</DropdownMenuLabel>
+        <DropdownMenuLabel>{user.displayName}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <Link href={`/users/${user.username}`}>
           <DropdownMenuItem>

@@ -29,7 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} max-h-screen overflow-clip`}
+      >
         <ReactQueryProvider>
           <ThemeProvider
             attribute="class"
