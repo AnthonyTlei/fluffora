@@ -29,11 +29,11 @@ model User {
 }
 
 model Fluff {
-    id          String  @id
-    userId      String
-    user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-    displayName String
-    imageUrl    String?
+    id     String  @id
+    userId String
+    user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    name   String
+    image  String?
 
     createdAt DateTime @default(now())
 
