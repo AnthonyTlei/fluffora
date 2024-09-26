@@ -23,9 +23,9 @@ export default async function Layout({
         height={400}
         className="absolute left-0 top-0 z-[-1] h-full w-full object-cover opacity-50 sm:rounded-lg"
       />
-      <div className="flex h-[100dvh] flex-col overflow-clip p-0">
+      <div className="flex h-[100dvh] flex-col p-0">
         <Navbar />
-        <div className="mx-auto flex w-full max-w-7xl grow gap-5 p-0 sm:p-5">
+        <div className="mx-auto flex w-full max-w-7xl grow gap-5 overflow-auto p-0 sm:p-5">
           {children}
         </div>
       </div>

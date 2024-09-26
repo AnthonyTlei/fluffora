@@ -1,4 +1,6 @@
 import { FluffData } from "@/lib/types";
+import { Card, CardContent, CardHeader } from "../ui/card";
+import Image from "next/image";
 
 interface FluffProps {
   fluff: FluffData;
@@ -6,10 +8,19 @@ interface FluffProps {
 
 export default function Fluff({ fluff }: FluffProps) {
   return (
-    <div className="w-full animate-pulse space-y-3 rounded-2xl bg-card p-5 shadow-sm">
-      <div className="flex flex-wrap gap-3">
-        <div className="space-y-1.5">{fluff.name}</div>
-      </div>
-    </div>
+    <Card>
+      <CardContent className="flex w-full flex-col items-center justify-center p-0 shadow-2xl">
+        <CardHeader>
+          <Image
+            src={fluff.image!}
+            width={400}
+            height={400}
+            alt="Fluff"
+            className="aspect-square w-full max-w-[100dvh] rounded-lg shadow-xl"
+          />
+          <span>{fluff.name}</span>
+        </CardHeader>
+      </CardContent>
+    </Card>
   );
 }

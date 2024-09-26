@@ -7,6 +7,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import FluffsLoadingSkeleton from "./fluffs/FluffsLoadingSkeleton";
 import Fluff from "./fluffs/Fluffs";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 interface FluffsListProps {
   userid: string;

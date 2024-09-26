@@ -57,7 +57,7 @@ export default async function Page({ params: { id } }: PageProps) {
 
   return (
     <main className="flex w-full min-w-0 gap-5">
-      <div className="w-full min-w-0 space-y-5 py-2 sm:p-4">
+      <div className="w-full min-w-0 space-y-5 p-2 sm:p-4">
         <FluffsList userid={id} />
       </div>
       <FloatingActionButton />

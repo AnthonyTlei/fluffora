@@ -14,9 +14,14 @@ export default async function Page() {
             <Button
               variant={"default"}
               size={"lg"}
-              className="w-[75%] sm:w-[50%]"
+              className="flex w-[75%] items-center justify-center p-0 sm:w-[50%]"
             >
-              <Link href={`/users/${loggedInUser?.id}/fluffs`}>My Fluffs</Link>
+              <Link
+                href={`/users/${loggedInUser?.id}/fluffs`}
+                className="flex h-full w-full items-center justify-center p-0"
+              >
+                My Fluffs
+              </Link>
             </Button>
           </CardContent>
         </Card>
