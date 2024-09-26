@@ -7,6 +7,8 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import FloatingActionButton from "./FloatingActionButton";
+import YourFluffsList from "@/components/FluffsList";
+import FluffsList from "@/components/FluffsList";
 
 interface PageProps {
   params: { id: string };
@@ -55,12 +57,8 @@ export default async function Page({ params: { id } }: PageProps) {
 
   return (
     <main className="flex w-full min-w-0 gap-5">
-      <div className="w-full min-w-0 space-y-5 sm:p-4">
-        <Card className="z-50 flex h-full w-full flex-col items-center justify-center rounded-none border-0 bg-secondary opacity-75 shadow-2xl sm:rounded-lg">
-          <CardContent className="flex w-full flex-col items-center justify-center p-4">
-            Start adding your Fluffs...
-          </CardContent>
-        </Card>
+      <div className="w-full min-w-0 space-y-5 py-2 sm:p-4">
+        <FluffsList userid={id} />
       </div>
       <FloatingActionButton />
     </main>

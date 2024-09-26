@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createFluffSchema, CreateFluffValues } from "@/lib/validation";
 import { Input } from "@/components/ui/input";
+import { useCreateFluffMutation } from "./mutations";
 
 interface CreateFluffDialogProps {
   open: boolean;
@@ -30,6 +31,8 @@ export default function CreateFluffDialog({
   open,
   onClose,
 }: CreateFluffDialogProps) {
+  const mutation = useCreateFluffMutation();
+
   const form = useForm<CreateFluffValues>({
     resolver: zodResolver(createFluffSchema),
     defaultValues: {
@@ -43,7 +46,19 @@ export default function CreateFluffDialog({
     }
   }
 
-  async function onSubmit(values: CreateFluffValues) {}
+  async function onSubmit(values: CreateFluffValues) {
+    mutation.mutate(
+      {
+        name: values.name,
+      },
+      {
+        onSuccess: () => {
+          form.reset();
+          onClose();
+        },
+      },
+    );
+  }
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -74,7 +89,7 @@ export default function CreateFluffDialog({
               <LoadingButton
                 variant="default"
                 onClick={() => {}}
-                loading={false}
+                loading={mutation.isPending}
               >
                 Create
               </LoadingButton>
