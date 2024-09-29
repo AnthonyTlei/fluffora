@@ -54,7 +54,7 @@ export default function FluffsList({ userid }: FluffsListProps) {
 
   return (
     <InfiniteScrollContainer
-      className="space-y-5"
+      className="flex flex-col items-center justify-center gap-4 p-0 py-4"
       onBottomReached={() => hasNextPage && !isFetching && fetchNextPage()}
     >
       {fluffs.map((fluff) => (
