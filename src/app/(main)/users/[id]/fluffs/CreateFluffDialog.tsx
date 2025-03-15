@@ -21,6 +21,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createFluffSchema, CreateFluffValues } from "@/lib/validation";
 import { Input } from "@/components/ui/input";
 import { useCreateFluffMutation } from "./mutations";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 interface CreateFluffDialogProps {
   open: boolean;
@@ -37,6 +39,7 @@ export default function CreateFluffDialog({
     resolver: zodResolver(createFluffSchema),
     defaultValues: {
       name: "",
+      description: "",
     },
   });
 
@@ -47,17 +50,17 @@ export default function CreateFluffDialog({
   }
 
   async function onSubmit(values: CreateFluffValues) {
-    mutation.mutate(
-      {
-        name: values.name,
+    const formData = new FormData();
+    formData.append("name", values.name);
+    if (values.description) formData.append("description", values.description);
+    if (values.image) formData.append("image", values.image);
+
+    mutation.mutate(formData, {
+      onSuccess: () => {
+        form.reset();
+        onClose();
       },
-      {
-        onSuccess: () => {
-          form.reset();
-          onClose();
-        },
-      },
-    );
+    });
   }
 
   return (
@@ -80,6 +83,45 @@ export default function CreateFluffDialog({
                   <FormLabel>Fluff&apos;s Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <Label>Description</Label>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Type your store description here."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field: { value, ...fieldValues } }) => (
+                <FormItem>
+                  <FormLabel>Fluff&apos;s Image</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="file"
+                      {...fieldValues}
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        fieldValues.onChange(file);
+                      }}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

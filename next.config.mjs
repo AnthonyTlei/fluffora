@@ -4,7 +4,12 @@ import { hostname } from "os";
 
 const nextConfig = {
   images: {
-    remotePatterns: [{ hostname: "images.unsplash.com" }],
+    remotePatterns: [
+      { hostname: "images.unsplash.com" },
+      {
+        hostname: "tleiji-fluff-battles-bucket.s3.eu-central-1.amazonaws.com",
+      },
+    ],
   },
   experimental: {
     staleTimes: {

@@ -4,21 +4,58 @@ import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 import { getFluffDataInclude } from "@/lib/types";
 import { createFluffSchema } from "@/lib/validation";
+import { createHash } from "crypto";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
-export async function createFluff(data: { name: string }) {
-  console.log(data);
+const s3 = new S3Client({
+  region: process.env.AWS_S3_REGION!,
+  credentials: {
+    accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY!,
+  },
+});
+
+export async function createFluff(formData: FormData) {
   const { user } = await validateRequest();
-
   if (!user) throw new Error("Unauthorized");
 
-  const { name } = createFluffSchema.parse(data);
+  const values = Object.fromEntries(formData.entries());
+  const { name, description, image } = createFluffSchema.parse(values);
+
+  let imageUrl: string | null = null;
+
+  if (image) {
+    try {
+      const hash = createHash("sha256").update(name).digest("hex").slice(0, 12);
+      const fileType = image.type.split("/")[1];
+      const fileName = `${user.id}_${hash}.${fileType}`;
+
+      const key = `fluffs/${fileName}`;
+
+      const fileBuffer = Buffer.from(await image.arrayBuffer());
+
+      const uploadParams = {
+        Bucket: process.env.AWS_S3_BUCKET_NAME!,
+        Key: key,
+        Body: fileBuffer,
+        ContentType: image.type,
+      };
+
+      await s3.send(new PutObjectCommand(uploadParams));
+
+      imageUrl = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/${key}`;
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      throw new Error("Image upload failed");
+    }
+  }
 
   const newFluff = await prisma.fluff.create({
     data: {
       name,
+      description,
       userId: user.id,
-      image:
-        "https://images.unsplash.com/photo-1641085809270-71f722611ce1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjF8fHBsdXNoaWV8ZW58MHx8MHx8fDA%3D",
+      image: imageUrl,
     },
     include: getFluffDataInclude(user.id),
   });

@@ -18,7 +18,7 @@ export default function Fluff({ fluff }: FluffProps) {
       <Separator />
       <CardContent className="flex w-full items-start justify-between p-0 shadow-2xl">
         <div className="h-full w-full p-4 text-sm font-light md:max-w-[45%]">
-          About
+          {fluff.description}
         </div>
         <Card className="flex w-full max-w-[30%] items-center justify-center rounded-none rounded-br-lg p-0 shadow-inner">
           <CardContent className="flex w-full items-center justify-center p-1 md:p-2">
