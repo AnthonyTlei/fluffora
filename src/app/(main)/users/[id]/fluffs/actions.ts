@@ -20,7 +20,11 @@ export async function createFluff(formData: FormData) {
   if (!user) throw new Error("Unauthorized");
 
   const values = Object.fromEntries(formData.entries());
-  const { name, description, image, traits } = createFluffSchema.parse(values);
+  const parsedTraits = values.traits ? JSON.parse(values.traits as string) : [];
+  const { name, description, image, traits } = createFluffSchema.parse({
+    ...values,
+    traits: parsedTraits,
+  });
 
   if (traits && traits?.length > 5) {
     traits.slice(0, 5);
