@@ -4,7 +4,6 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import { getFluff } from "../../actions";
-import { FluffData } from "@/lib/types";
 import Chat from "@/components/chat/Chat";
 
 interface FluffPageProps {

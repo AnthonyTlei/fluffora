@@ -67,3 +67,34 @@ export async function createFluff(formData: FormData) {
 
   return newFluff;
 }
+
+export async function updateFluff(
+  id: string,
+  data: {
+    name: string;
+    description?: string;
+    traits?: string[];
+    image?: string;
+  },
+) {
+  try {
+    return await prisma.fluff.update({
+      where: { id },
+      data,
+    });
+  } catch (error) {
+    console.error("Error updating Fluff:", error);
+    throw new Error("Failed to update Fluff.");
+  }
+}
+
+export async function deleteFluff(id: string) {
+  try {
+    return await prisma.fluff.delete({
+      where: { id },
+    });
+  } catch (error) {
+    console.error("Error deleting Fluff:", error);
+    throw new Error("Failed to delete Fluff.");
+  }
+}
