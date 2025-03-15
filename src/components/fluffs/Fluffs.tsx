@@ -2,6 +2,9 @@ import { FluffData } from "@/lib/types";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import Image from "next/image";
 import { Separator } from "../ui/separator";
+import { MessageCircle } from "lucide-react";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 interface FluffProps {
   fluff: FluffData;
@@ -11,8 +14,17 @@ export default function Fluff({ fluff }: FluffProps) {
   return (
     <Card className="flex w-full flex-col items-center justify-center shadow-xl">
       <CardHeader className="w-full px-2 py-1 md:px-4 md:py-2">
-        <div className="flex items-center justify-center">
-          <span className="text-base font-bold">{fluff.name}</span>
+        <div className="flex justify-between">
+          <div className="flex items-center justify-center">
+            <span className="text-base font-bold">{fluff.name}</span>
+          </div>
+          <div>
+            <Link href={`/fluffs/${fluff.id}/chat`}>
+              <Button variant={"ghost"} className="p-0" asChild>
+                <MessageCircle />
+              </Button>
+            </Link>
+          </div>
         </div>
       </CardHeader>
       <Separator />
