@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 import { getFluff } from "../../actions";
 import { FluffData } from "@/lib/types";
+import Chat from "@/components/chat/Chat";
 
 interface FluffPageProps {
   params: {
@@ -40,7 +41,15 @@ export default async function Page({ params: { id } }: FluffPageProps) {
       <div className="w-full min-w-0 space-y-5 sm:p-4">
         <Card className="z-50 flex h-full w-full flex-col items-center justify-center rounded-none border-0 bg-secondary opacity-75 shadow-2xl sm:rounded-lg">
           <CardContent className="flex w-full flex-col items-center justify-center p-4">
-            {fluff.name}
+            <h1 className="text-center text-2xl font-bold">
+              {fluff.name} - Chat
+            </h1>
+            <Chat
+              fluffId={id}
+              fluffName={fluff.name}
+              fluffDescription={fluff.description!}
+              userName={user!.displayName}
+            />
           </CardContent>
         </Card>
       </div>
