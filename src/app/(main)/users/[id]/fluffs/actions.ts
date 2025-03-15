@@ -20,7 +20,11 @@ export async function createFluff(formData: FormData) {
   if (!user) throw new Error("Unauthorized");
 
   const values = Object.fromEntries(formData.entries());
-  const { name, description, image } = createFluffSchema.parse(values);
+  const { name, description, image, traits } = createFluffSchema.parse(values);
+
+  if (traits && traits?.length > 5) {
+    traits.slice(0, 5);
+  }
 
   let imageUrl: string | null = null;
 
@@ -56,6 +60,7 @@ export async function createFluff(formData: FormData) {
       description,
       userId: user.id,
       image: imageUrl,
+      traits: traits,
     },
     include: getFluffDataInclude(user.id),
   });

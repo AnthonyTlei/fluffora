@@ -1,10 +1,12 @@
 import { FluffData } from "@/lib/types";
-import { Card, CardContent, CardHeader } from "../ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import Image from "next/image";
 import { Separator } from "../ui/separator";
-import { MessageCircle } from "lucide-react";
+import { Badge as BadgeIcon, Edit, MessageCircle } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { Badge } from "../ui/badge";
+import FluffTrait from "./FluffTrait";
 
 interface FluffProps {
   fluff: FluffData;
@@ -18,7 +20,12 @@ export default function Fluff({ fluff }: FluffProps) {
           <div className="flex items-center justify-center">
             <span className="text-base font-bold">{fluff.name}</span>
           </div>
-          <div>
+          <div className="flex gap-2">
+            <Link href={`/fluffs/${fluff.id}/edit`}>
+              <Button variant={"ghost"} className="p-0" asChild>
+                <Edit />
+              </Button>
+            </Link>
             <Link href={`/fluffs/${fluff.id}/chat`}>
               <Button variant={"ghost"} className="p-0" asChild>
                 <MessageCircle />
@@ -28,11 +35,11 @@ export default function Fluff({ fluff }: FluffProps) {
         </div>
       </CardHeader>
       <Separator />
-      <CardContent className="flex w-full items-start justify-between p-0 shadow-2xl">
+      <CardContent className="flex w-full items-start justify-between p-0">
         <div className="h-full w-full p-4 text-sm font-light md:max-w-[45%]">
-          {fluff.description}
+          <span className="line-clamp-4">{fluff.description}</span>
         </div>
-        <Card className="flex w-full max-w-[30%] items-center justify-center rounded-none rounded-br-lg p-0 shadow-inner">
+        <Card className="flex w-full max-w-[30%] items-center justify-center rounded-none rounded-br-lg p-0">
           <CardContent className="flex w-full items-center justify-center p-1 md:p-2">
             <Image
               src={fluff.image!}
@@ -44,6 +51,16 @@ export default function Fluff({ fluff }: FluffProps) {
           </CardContent>
         </Card>
       </CardContent>
+      <Separator />
+      <CardFooter className="flex h-full w-full gap-2 px-4 py-2 text-sm font-light">
+        {fluff.traits.length !== 0 && (
+          <div className="flex flex-wrap gap-2">
+            {fluff.traits?.map((trait, index) => (
+              <FluffTrait key={index} title={trait} />
+            ))}
+          </div>
+        )}
+      </CardFooter>
     </Card>
   );
 }

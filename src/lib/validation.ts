@@ -14,10 +14,16 @@ const imageSchema = z
     "File must be less than 8MB",
   );
 
+const traitsSchema = z
+  .array(z.string().trim().min(1, "Trait cannot be empty"))
+  .max(5, "You can add up to 5 traits")
+  .optional();
+
 export const createFluffSchema = z.object({
   name: requiredString,
   description: optionalString,
   image: imageSchema.optional(),
+  traits: traitsSchema,
 });
 
 export type CreateFluffValues = z.infer<typeof createFluffSchema>;

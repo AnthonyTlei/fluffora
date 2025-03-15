@@ -2,20 +2,13 @@
 
 import { useState, useEffect, useRef } from "react";
 import ky from "ky";
+import { FluffData } from "@/lib/types";
 
 interface ChatProps {
-  fluffId: string;
-  fluffName: string;
-  fluffDescription: string;
-  userName: string;
+  fluff: FluffData;
 }
 
-export default function Chat({
-  fluffId,
-  fluffName,
-  fluffDescription,
-  userName,
-}: ChatProps) {
+export default function Chat({ fluff }: ChatProps) {
   const [messages, setMessages] = useState<{ role: string; content: string }[]>(
     [],
   );
@@ -38,10 +31,11 @@ export default function Chat({
       const response = await fetch("/api/chat", {
         method: "POST",
         body: JSON.stringify({
-          fluffId,
-          fluffName,
-          fluffDescription,
-          userName,
+          fluffId: fluff.id,
+          fluffName: fluff.name,
+          fluffDescription: fluff.description,
+          fluffTraits: fluff.traits,
+          userName: fluff.user.displayName,
           messages: [...messages, userMessage],
         }),
         headers: { "Content-Type": "application/json" },
@@ -77,7 +71,7 @@ export default function Chat({
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-2xl flex-col rounded-lg bg-white p-4 shadow-lg">
+    <div className="mx-auto flex w-full max-w-2xl flex-col rounded-lg bg-primary p-4 shadow-lg">
       <div className="h-96 space-y-2 overflow-y-auto border-b p-3">
         {messages.map((msg, index) => (
           <div
@@ -88,7 +82,9 @@ export default function Chat({
                 : "self-start bg-gray-200 text-black"
             }`}
           >
-            <strong>{msg.role === "user" ? userName : fluffName}:</strong>{" "}
+            <strong>
+              {msg.role === "user" ? fluff.user.displayName : fluff.name}:
+            </strong>{" "}
             {msg.content}
           </div>
         ))}

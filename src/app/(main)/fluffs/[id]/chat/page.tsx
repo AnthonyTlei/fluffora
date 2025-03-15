@@ -44,12 +44,7 @@ export default async function Page({ params: { id } }: FluffPageProps) {
             <h1 className="text-center text-2xl font-bold">
               {fluff.name} - Chat
             </h1>
-            <Chat
-              fluffId={id}
-              fluffName={fluff.name}
-              fluffDescription={fluff.description!}
-              userName={user!.displayName}
-            />
+            <Chat fluff={fluff} />
           </CardContent>
         </Card>
       </div>

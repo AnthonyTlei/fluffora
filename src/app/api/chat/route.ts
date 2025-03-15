@@ -5,17 +5,23 @@ import { validateRequest } from "@/auth";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { fluffName, fluffDescription, userName, messages } = body;
+    const { fluffName, fluffDescription, fluffTraits, userName, messages } =
+      body;
 
     const { user } = await validateRequest();
     if (!user) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const formattedTraits =
+      fluffTraits && fluffTraits.length > 0
+        ? `This fluff has the following personality traits: ${fluffTraits.join(", ")}.`
+        : "This fluff does not have specific traits mentioned.";
+
     const systemMessage = {
       role: "system",
       content: `You are ${fluffName}, a virtual companion. Your personality is based on this description: "${fluffDescription}". 
-        Stay in character and engage with ${userName} in a friendly, immersive way.`,
+        ${formattedTraits} Stay in character and engage with ${userName} in a friendly, immersive way.`,
     };
 
     const openaiMessages = [systemMessage, ...messages.slice(-6)];

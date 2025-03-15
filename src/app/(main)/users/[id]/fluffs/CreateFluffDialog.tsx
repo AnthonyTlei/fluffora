@@ -1,3 +1,4 @@
+import { useState } from "react";
 import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { useCreateFluffMutation } from "./mutations";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { X } from "lucide-react";
 
 interface CreateFluffDialogProps {
   open: boolean;
@@ -40,8 +42,12 @@ export default function CreateFluffDialog({
     defaultValues: {
       name: "",
       description: "",
+      traits: [],
     },
   });
+
+  const [traits, setTraits] = useState<string[]>([]);
+  const [traitError, setTraitError] = useState<string | null>(null);
 
   function handleOpenChange(open: boolean) {
     if (!open) {
@@ -49,15 +55,46 @@ export default function CreateFluffDialog({
     }
   }
 
+  function handleAddTrait(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const value = event.currentTarget.value.trim();
+
+      if (!value) return;
+      if (traits.includes(value)) {
+        setTraitError("This trait is already added.");
+        return;
+      }
+      if (traits.length >= 5) {
+        setTraitError("You can add up to 5 traits.");
+        return;
+      }
+
+      setTraits([...traits, value]);
+      form.setValue("traits", [...traits, value]);
+      setTraitError(null);
+      event.currentTarget.value = "";
+    }
+  }
+
+  function handleRemoveTrait(trait: string) {
+    const updatedTraits = traits.filter((t) => t !== trait);
+    setTraits(updatedTraits);
+    form.setValue("traits", updatedTraits);
+    setTraitError(null);
+  }
+
   async function onSubmit(values: CreateFluffValues) {
     const formData = new FormData();
     formData.append("name", values.name);
     if (values.description) formData.append("description", values.description);
     if (values.image) formData.append("image", values.image);
+    formData.append("traits", JSON.stringify(traits));
 
     mutation.mutate(formData, {
       onSuccess: () => {
         form.reset();
+        setTraits([]);
         onClose();
       },
     });
@@ -97,7 +134,7 @@ export default function CreateFluffDialog({
                   <Label>Description</Label>
                   <FormControl>
                     <Textarea
-                      placeholder="Type your store description here."
+                      placeholder="Type your fluff's description here."
                       {...field}
                     />
                   </FormControl>
@@ -127,6 +164,46 @@ export default function CreateFluffDialog({
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="traits"
+              render={() => (
+                <FormItem>
+                  <FormLabel>Traits (Max 5)</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Type a trait and press Enter..."
+                      onKeyDown={handleAddTrait}
+                      className="w-full"
+                    />
+                  </FormControl>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {traits.map((trait, index) => (
+                      <span
+                        key={index}
+                        className="flex items-center gap-1 rounded-full bg-secondary px-2 py-1 text-sm"
+                      >
+                        {trait}
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveTrait(trait)}
+                          className="ml-1 text-gray-600 hover:text-red-500"
+                        >
+                          <X size={14} />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                  {traitError && (
+                    <p className="mt-1 text-xs text-red-500">{traitError}</p>
+                  )}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <DialogFooter className="flex gap-2">
               <LoadingButton
                 variant="default"
