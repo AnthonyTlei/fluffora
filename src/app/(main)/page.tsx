@@ -2,9 +2,11 @@ import { validateRequest } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const { user: loggedInUser } = await validateRequest();
+  redirect(`/users/${loggedInUser?.id}/fluffs`);
 
   return (
     <main className="flex w-full min-w-0 gap-5">
