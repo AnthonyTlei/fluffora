@@ -1,7 +1,7 @@
 import UserButton from "@/components/UserButton";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/assets/logo/logo.webp";
+import logo from "@/assets/logo/logo.png";
 
 export default function Navbar() {
   return (

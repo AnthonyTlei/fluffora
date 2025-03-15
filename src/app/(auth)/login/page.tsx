@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import GoogleSignInButton from "./google/google-login-button";
-import logo from "@/assets/logo/logo.webp";
+import logo from "@/assets/logo/logo.png";
 
 export const metadata: Metadata = {
   title: "Login",
