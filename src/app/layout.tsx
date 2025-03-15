@@ -15,11 +15,11 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Fluff Battles",
-    default: "Fluff Battles",
+    template: "%s | Fluffora",
+    default: "Fluffora",
   },
   description:
-    "Fluff Battles is an adorable and exciting card game where players collect and battle with custom characters inspired by fluffy, cute plushies. Each character card features unique stats and abilities, allowing for strategic play and endless fun. Designed to be both lighthearted and competitive, Fluff Battles brings the charm of plush toys into a colorful and engaging digital world, where players can create their own custom cards and challenge others in friendly, fluff-filled showdowns!",
+    "Fluffora is where imagination meets AI! 🧸✨ Upload a picture of your favorite plushie and watch it come to life with personality, conversation, and endless fun. Whether it’s a cuddly bear, a quirky dragon, or a fluffy bunny, Fluffora turns your plush into a chatty companion, ready to share stories, jokes, and adventures. Your fluff, your world—let the magic begin! 🚀💖",
 };
 
 export default function RootLayout({

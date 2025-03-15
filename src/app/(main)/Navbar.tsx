@@ -16,7 +16,7 @@ export default function Navbar() {
               height={400}
               className="aspect-square h-10 w-10 rounded-full object-cover sm:h-12 sm:w-12"
             />
-            <span className="text-lg font-bold sm:text-xl">Fluff Battles</span>
+            <span className="text-lg font-bold sm:text-xl">Fluffora</span>
           </div>
         </Link>
         <UserButton className="ms-auto flex" />
