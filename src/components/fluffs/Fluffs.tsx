@@ -39,17 +39,21 @@ export default function Fluff({ fluff }: FluffProps) {
         <div className="h-full w-full p-4 text-sm font-light md:max-w-[45%]">
           <span className="line-clamp-4">{fluff.description}</span>
         </div>
-        <Card className="flex w-full max-w-[30%] items-center justify-center rounded-none rounded-br-lg p-0">
-          <CardContent className="flex w-full items-center justify-center p-1 md:p-2">
-            <Image
-              src={fluff.image!}
-              width={400}
-              height={400}
-              alt="Fluff"
-              className="aspect-square w-full rounded-sm"
-            />
-          </CardContent>
-        </Card>
+        {fluff.image && (
+          <Card className="flex w-full max-w-[30%] items-center justify-center rounded-none rounded-br-lg p-0">
+            <CardContent className="flex w-full items-center justify-center p-1 md:p-2">
+              {fluff.image && (
+                <Image
+                  src={fluff.image}
+                  width={400}
+                  height={400}
+                  alt="Fluff"
+                  className="aspect-square w-full rounded-sm"
+                />
+              )}
+            </CardContent>
+          </Card>
+        )}
       </CardContent>
       <Separator />
       <CardFooter className="flex h-full w-full gap-2 px-4 py-2 text-sm font-light">
