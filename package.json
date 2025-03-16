@@ -26,6 +26,7 @@
     "arctic": "^1.9.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.5.0",
     "ky": "^1.7.2",
     "lucia": "^3.2.0",
     "lucide-react": "^0.445.0",
