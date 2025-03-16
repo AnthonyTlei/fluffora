@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/create-next-app).
+# Fluffora 🧸✨
 
-## Getting Started
+Bring your plushies to life with AI! Fluffora lets users **upload images of their plushies** and **chat with them** using AI-powered interactions. Built with modern web technologies, Fluffora provides a seamless and engaging experience for users.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📸 Preview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<p align="center">
+  <img src="public/screenshots/login.jpg" width="300" />
+  <img src="public/screenshots/homepage.jpg" width="300" />
+  <img src="public/screenshots/editing.jpg" width="300" />
+  <img src="public/screenshots/chat.jpg" width="300" />
+</p>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load Inter, a custom Google Font.
+## 🚀 Tech Stack
 
-## Learn More
+Fluffora is powered by a robust stack to ensure performance, scalability, and an engaging user experience:
 
-To learn more about Next.js, take a look at the following resources:
+- **Next.js 15** – Server Components, API routes, caching
+- **Lucia Auth** – Secure authentication with Google OAuth
+- **Prisma** – Database ORM with PostgreSQL
+- **React Query** – Efficient data fetching and state management
+- **Amazon S3** – Image uploads and storage
+- **OpenAI API** – AI-powered chat interactions
+- **Framer Motion & Tailwind CSS** – Beautiful UI animations and styling
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📌 Features
 
-## Deploy on Vercel
+✅ **User Authentication** – Google OAuth via Lucia Auth  
+✅ **Upload Plushie Images** – Stored securely on AWS S3  
+✅ **AI Chat System** – Conversations powered by OpenAI  
+✅ **Real-Time UI Updates** – React Query with optimistic UI  
+✅ **Role-Based Access** – Admin, Tester, and User permissions  
+✅ **Pagination & Infinite Scrolling** – Fast and efficient loading  
+✅ **Optimistic UI** – Instant updates when adding/deleting fluffs
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠 Installation & Setup
+
+1. Clone the repository:
+
+   ```sh
+   git clone https://github.com/yourusername/fluffora.git
+   cd fluffora
+   ```
+
+2. Install dependencies:
+
+   ```sh
+   npm install
+   or
+   npm install --legacy-peer-deps
+   ```
+
+3. Set up environment variables:
+
+   ```env
+   # Vercel Postgres
+   DATABASE_URL=""
+
+   # Google OAuth
+   GOOGLE_CLIENT_ID=""
+   GOOGLE_CLIENT_SECRET=""
+
+   # Other
+   NEXT_PUBLIC_BASE_URL=""
+
+   # Amazon S3
+   AWS_S3_REGION=""
+   AWS_S3_ACCESS_KEY_ID=""
+   AWS_S3_SECRET_ACCESS_KEY=""
+   AWS_S3_BUCKET_NAME=""
+
+   # Open AI
+   OPENAI_API_KEY=""
+   ```
+
+4. Run database migrations:
+
+   ```sh
+   npx prisma migrate dev
+   ```
+
+5. Start the development server:
+   ```sh
+   npm run dev
+   ```
+
+---
+
+## 🎥 Live Demo
+
+_Add a link to a live demo of Fluffora if available_
+
+---
