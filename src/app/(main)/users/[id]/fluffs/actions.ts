@@ -19,6 +19,20 @@ export async function createFluff(formData: FormData) {
   const { user } = await validateRequest();
   if (!user) throw new Error("Unauthorized");
 
+  const isUnlimited = user.role === "ADMIN" || user.role === "TESTER";
+
+  if (!isUnlimited) {
+    const fluffCount = await prisma.fluff.count({
+      where: { userId: user.id },
+    });
+
+    if (fluffCount >= 3) {
+      throw new Error(
+        "You can only have up to 3 Fluffs. Delete one to create a new one.",
+      );
+    }
+  }
+
   const values = Object.fromEntries(formData.entries());
   const parsedTraits = values.traits ? JSON.parse(values.traits as string) : [];
   const { name, description, image, traits } = createFluffSchema.parse({
