@@ -105,9 +105,9 @@ export default function EditFluffForm({ fluff }: { fluff: FluffData }) {
 
   return (
     <div className="h-full w-full max-w-3xl space-y-6 rounded-lg bg-card p-6 text-primary shadow-lg">
-      <div className="flex h-[25%] flex-col items-center text-center">
+      <div className="flex flex-col items-center text-center">
         {fluff.image && (
-          <div className="relative h-48 w-48">
+          <div className="relative h-24 w-24 lg:h-48 lg:w-48">
             <Image
               src={fluff.image!}
               width={200}
@@ -122,7 +122,7 @@ export default function EditFluffForm({ fluff }: { fluff: FluffData }) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex h-[60%] max-h-[60%] flex-col justify-between space-y-4"
+          className="flex flex-col justify-between space-y-4"
         >
           <div>
             <FormField

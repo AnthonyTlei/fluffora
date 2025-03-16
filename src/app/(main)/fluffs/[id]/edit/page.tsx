@@ -18,5 +18,9 @@ export default async function EditFluffPage({
     return <p className="text-center text-red-500">Fluff not found.</p>;
   }
 
-  return <EditFluffForm fluff={fluff} />;
+  return (
+    <div className="flex h-full w-full items-center justify-center">
+      <EditFluffForm fluff={fluff} />
+    </div>
+  );
 }
