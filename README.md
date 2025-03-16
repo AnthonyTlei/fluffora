@@ -46,7 +46,7 @@ Fluffora is powered by a robust stack to ensure performance, scalability, and an
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/yourusername/fluffora.git
+   git clone https://github.com/AnthonyTlei/fluffora.git
    cd fluffora
    ```
 
