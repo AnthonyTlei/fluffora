@@ -26,8 +26,24 @@ export async function createFluff(formData: FormData) {
     traits: parsedTraits,
   });
 
-  if (traits && traits?.length > 5) {
+  if (traits && traits.length > 5) {
     traits.slice(0, 5);
+  }
+
+  const existingFluff = await prisma.fluff.findFirst({
+    where: {
+      userId: user.id,
+      name: {
+        equals: name,
+        mode: "insensitive",
+      },
+    },
+  });
+
+  if (existingFluff) {
+    throw new Error(
+      `You already have a Fluff named "${name}". Please choose a different name.`,
+    );
   }
 
   let imageUrl: string | null = null;
@@ -39,7 +55,6 @@ export async function createFluff(formData: FormData) {
       const fileName = `${user.id}_${hash}.${fileType}`;
 
       const key = `fluffs/${fileName}`;
-
       const fileBuffer = Buffer.from(await image.arrayBuffer());
 
       const uploadParams = {
@@ -82,6 +97,38 @@ export async function updateFluff(
   },
 ) {
   try {
+    const existingFluff = await prisma.fluff.findUnique({
+      where: { id },
+      select: { userId: true, name: true },
+    });
+
+    if (!existingFluff) {
+      throw new Error("Fluff not found.");
+    }
+
+    const { user } = await validateRequest();
+    if (!user || existingFluff.userId !== user.id) {
+      throw new Error("Unauthorized.");
+    }
+
+    if (data.name && data.name !== existingFluff.name) {
+      const nameExists = await prisma.fluff.findFirst({
+        where: {
+          userId: user.id,
+          name: {
+            equals: data.name,
+            mode: "insensitive",
+          },
+        },
+      });
+
+      if (nameExists) {
+        throw new Error(
+          `You already have a Fluff named "${data.name}". Please choose a different name.`,
+        );
+      }
+    }
+
     return await prisma.fluff.update({
       where: { id },
       data,
@@ -94,6 +141,24 @@ export async function updateFluff(
 
 export async function deleteFluff(id: string) {
   try {
+    const { user } = await validateRequest();
+    if (!user) {
+      throw new Error("Unauthorized.");
+    }
+
+    const fluff = await prisma.fluff.findUnique({
+      where: { id },
+      select: { userId: true },
+    });
+
+    if (!fluff) {
+      throw new Error("Fluff not found.");
+    }
+
+    if (fluff.userId !== user.id) {
+      throw new Error("Unauthorized.");
+    }
+
     return await prisma.fluff.delete({
       where: { id },
     });

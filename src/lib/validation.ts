@@ -10,7 +10,7 @@ const imageSchema = z
     "Invalid image file",
   )
   .refine(
-    (file) => !file || file.size < 1024 * 1024 * 16,
+    (file) => !file || file.size < 1024 * 1024 * 8,
     "File must be less than 8MB",
   );
 

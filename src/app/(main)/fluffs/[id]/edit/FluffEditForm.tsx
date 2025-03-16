@@ -20,11 +20,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { X } from "lucide-react";
+import Image from "next/image";
 import {
   deleteFluff,
   updateFluff,
 } from "@/app/(main)/users/[id]/fluffs/actions";
-import Image from "next/image";
 
 export default function EditFluffForm({ fluff }: { fluff: FluffData }) {
   const [traits, setTraits] = useState<string[]>(fluff.traits || []);
