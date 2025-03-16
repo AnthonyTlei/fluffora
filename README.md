@@ -4,6 +4,13 @@ Bring your plushies to life with AI! Fluffora lets users **upload images of thei
 
 ---
 
+## 🚀 Try It Out
+
+🔗 **Live Demo:** [fluffora.vercel.app](https://fluffora.vercel.app)  
+Sign up and start chatting with your plushies instantly! 🧸✨
+
+---
+
 ## 📸 Preview
 
 <p align="center">
