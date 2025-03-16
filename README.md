@@ -96,6 +96,6 @@ Fluffora is powered by a robust stack to ensure performance, scalability, and an
 
 ## 🎥 Live Demo
 
-_Add a link to a live demo of Fluffora if available_
+🔗 Watch the demo on [YouTube Shorts](https://youtube.com/shorts/zmZ8oxqEt-E?si=7z30D7Kbh6Uc5qhj)
 
 ---
