@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
     provider        = "prisma-client-js"
     previewFeatures = ["fullTextSearch"]
@@ -13,6 +8,12 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+enum Role {
+    USER
+    ADMIN
+    TESTER
+}
+
 model User {
     id          String    @id
     displayName String
@@ -20,6 +21,7 @@ model User {
     googleId    String?   @unique
     avatarUrl   String?
     bio         String?
+    role        Role      @default(USER)
     sessions    Session[]
 
     createdAt DateTime @default(now())

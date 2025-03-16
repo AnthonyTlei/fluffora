@@ -9,7 +9,9 @@ export async function POST(req: NextRequest) {
       body;
 
     const { user } = await validateRequest();
-    if (!user) {
+    const enableChat = user?.role === "ADMIN" || user?.role === "TESTER";
+
+    if (!user || !enableChat) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 

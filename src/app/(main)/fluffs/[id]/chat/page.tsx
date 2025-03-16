@@ -33,6 +33,12 @@ export async function generateMetadata({
 
 export default async function Page({ params: { id } }: FluffPageProps) {
   const { user } = await validateRequest();
+  if (!user || !user.id) {
+    throw new Error("Unauthorized");
+  }
+
+  const enableChat = user.role === "ADMIN" || user.role === "TESTER";
+
   const fluff = await getCachedFluff(id);
 
   return (
@@ -43,7 +49,12 @@ export default async function Page({ params: { id } }: FluffPageProps) {
             <h1 className="text-center text-2xl font-bold">
               {fluff.name} - Chat
             </h1>
-            <Chat fluff={fluff} />
+            {enableChat && <Chat fluff={fluff} />}
+            {!enableChat && (
+              <div className="bg-red-300 font-bold">
+                You need to be a tester to use the AI chat feature
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

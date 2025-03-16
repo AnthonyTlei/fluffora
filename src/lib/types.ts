@@ -7,6 +7,7 @@ export function getUserDataSelect(loggedInUserId: string) {
     avatarUrl: true,
     bio: true,
     createdAt: true,
+    role: true,
   } satisfies Prisma.UserSelect;
 }
 
