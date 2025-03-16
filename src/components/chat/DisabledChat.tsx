@@ -13,6 +13,10 @@ interface DisabledChatProps {
 }
 
 export default function DisabledChat({ fluff }: DisabledChatProps) {
+  const messageLimit = 3;
+  const usedMessages = fluff.user.messageCount;
+  const remainingMessages = Math.max(0, messageLimit - usedMessages);
+
   return (
     <Card className="w-full max-w-2xl rounded-lg shadow-lg">
       <CardHeader className="flex items-center gap-2 bg-secondary p-4 text-lg font-bold text-primary">
@@ -20,23 +24,26 @@ export default function DisabledChat({ fluff }: DisabledChatProps) {
         AI Chat Disabled
       </CardHeader>
 
-      {/* Chat Messages Area */}
       <ScrollArea className="flex h-96 flex-col items-center justify-center p-4 text-center">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="flex flex-col items-center gap-2 text-gray-500"
+          className="flex flex-col items-center gap-3 text-gray-500"
         >
           <AlertTriangle className="h-10 w-10 text-yellow-500" />
-          <p className="text-lg font-semibold">AI Chat is Unavailable</p>
+          <p className="text-lg font-semibold">Message Limit Reached</p>
           <p className="text-sm">
-            You don’t have permission to chat with {fluff.name} at the moment.
+            You’ve used <span className="font-bold">{usedMessages}</span>/
+            {messageLimit} messages.
+          </p>
+          <p className="text-xs text-gray-400">
+            Your current limit is{" "}
+            <span className="font-bold">{messageLimit}</span> messages.
           </p>
         </motion.div>
       </ScrollArea>
 
-      {/* Disabled Input & Button */}
       <CardContent className="flex items-center gap-2 border-t p-4 opacity-50">
         <Input
           type="text"

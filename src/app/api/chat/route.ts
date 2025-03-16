@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import openai from "@/lib/openai";
+import prisma from "@/lib/prisma";
 import { validateRequest } from "@/auth";
 
 export async function POST(req: NextRequest) {
@@ -9,10 +10,35 @@ export async function POST(req: NextRequest) {
       body;
 
     const { user } = await validateRequest();
-    const enableChat = user?.role === "ADMIN" || user?.role === "TESTER";
-
-    if (!user || !enableChat) {
+    if (!user) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const enableChat = user.role === "ADMIN" || user.role === "TESTER";
+
+    const userRecord = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { messageCount: true },
+    });
+
+    if (!userRecord) {
+      return Response.json({ error: "User not found" }, { status: 404 });
+    }
+
+    if (!enableChat && userRecord.messageCount >= 3) {
+      return Response.json(
+        { error: "Message limit reached. Upgrade to continue chatting." },
+        { status: 403 },
+      );
+    }
+
+    if (!enableChat) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          messageCount: { increment: 1 },
+        },
+      });
     }
 
     const formattedTraits =

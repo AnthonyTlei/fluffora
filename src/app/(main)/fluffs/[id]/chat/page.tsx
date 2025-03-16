@@ -15,9 +15,7 @@ interface FluffPageProps {
 
 const getCachedFluff = cache(async (id: string) => {
   const fluff = await getFluff(id);
-
   if (!fluff) notFound();
-
   return fluff;
 });
 
@@ -25,7 +23,6 @@ export async function generateMetadata({
   params: { id },
 }: FluffPageProps): Promise<Metadata> {
   const fluff = await getCachedFluff(id);
-
   return {
     title: fluff.name + " - Chat",
     description: fluff.description,
@@ -40,6 +37,8 @@ export default async function Page({ params: { id } }: FluffPageProps) {
 
   const enableChat = user.role === "ADMIN" || user.role === "TESTER";
 
+  const hasMessagesLeft = user.messageCount < 3;
+
   const fluff = await getCachedFluff(id);
 
   return (
@@ -47,8 +46,11 @@ export default async function Page({ params: { id } }: FluffPageProps) {
       <div className="w-full min-w-0 space-y-5 sm:p-4">
         <Card className="z-50 flex h-full w-full flex-col items-center justify-center rounded-none border-0 bg-secondary opacity-75 shadow-2xl sm:rounded-lg">
           <CardContent className="flex h-full w-full flex-col items-center justify-center">
-            {enableChat && <Chat fluff={fluff} />}
-            {!enableChat && <DisabledChat fluff={fluff} />}
+            {enableChat || hasMessagesLeft ? (
+              <Chat fluff={fluff} />
+            ) : (
+              <DisabledChat fluff={fluff} />
+            )}
           </CardContent>
         </Card>
       </div>

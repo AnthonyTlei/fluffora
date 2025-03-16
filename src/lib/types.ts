@@ -8,6 +8,7 @@ export function getUserDataSelect(loggedInUserId: string) {
     bio: true,
     createdAt: true,
     role: true,
+    messageCount: true,
   } satisfies Prisma.UserSelect;
 }
 

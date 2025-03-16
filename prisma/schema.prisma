@@ -15,14 +15,15 @@ enum Role {
 }
 
 model User {
-    id          String    @id
-    displayName String
-    email       String    @unique
-    googleId    String?   @unique
-    avatarUrl   String?
-    bio         String?
-    role        Role      @default(USER)
-    sessions    Session[]
+    id           String    @id
+    displayName  String
+    email        String    @unique
+    googleId     String?   @unique
+    avatarUrl    String?
+    bio          String?
+    role         Role      @default(USER)
+    messageCount Int       @default(0)
+    sessions     Session[]
 
     createdAt DateTime @default(now())
     Fluff     Fluff[]

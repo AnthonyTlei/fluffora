@@ -23,6 +23,7 @@ export const lucia = new Lucia(adapter, {
       avatarUrl: databaseUserAttributes.avatarUrl,
       googleId: databaseUserAttributes.googleId,
       role: databaseUserAttributes.role,
+      messageCount: databaseUserAttributes.messageCount,
     };
   },
 });
@@ -42,6 +43,7 @@ interface DatabaseUserAttributes {
   avatarUrl: string | null;
   googleId: string | null;
   role: "USER" | "ADMIN" | "TESTER";
+  messageCount: number;
 }
 
 export const google = new Google(
