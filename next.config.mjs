@@ -1,11 +1,15 @@
-/** @type {import('next').NextConfig} */
+import nextPWA from "next-pwa";
 
-import { hostname } from "os";
+const withPWA = nextPWA({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === "development",
+});
 
-const nextConfig = {
+const nextConfig = withPWA({
   images: {
     remotePatterns: [
-      { hostname: "images.unsplash.com" },
       {
         hostname: "tleiji-fluff-battles-bucket.s3.eu-central-1.amazonaws.com",
       },
@@ -19,6 +23,6 @@ const nextConfig = {
       bodySizeLimit: "8mb",
     },
   },
-};
+});
 
 export default nextConfig;

@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import ReactQueryProvider from "./ReactQueryProvider";
+import ServiceWorkerRegister from "@/lib/ServiceWorkerRegister";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,7 +20,12 @@ export const metadata: Metadata = {
     default: "Fluffora",
   },
   description:
-    "Fluffora is where imagination meets AI! 🧸✨ Upload a picture of your favorite plushie and watch it come to life with personality, conversation, and endless fun. Whether it’s a cuddly bear, a quirky dragon, or a fluffy bunny, Fluffora turns your plush into a chatty companion, ready to share stories, jokes, and adventures. Your fluff, your world—let the magic begin! 🚀💖",
+    "Fluffora is where imagination meets AI! 🧸✨ Upload a picture of your favorite plushie and watch it come to life with personality, conversation, and endless fun.",
+  manifest: "/manifest.json",
+};
+
+export const viewport = {
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({
@@ -40,6 +46,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <ServiceWorkerRegister />
           </ThemeProvider>
         </ReactQueryProvider>
       </body>
