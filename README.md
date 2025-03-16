@@ -7,10 +7,10 @@ Bring your plushies to life with AI! Fluffora lets users **upload images of thei
 ## 📸 Preview
 
 <p align="center">
-  <img src="public/screenshots/login.jpg" width="300" />
-  <img src="public/screenshots/homepage.jpg" width="300" />
-  <img src="public/screenshots/editing.jpg" width="300" />
-  <img src="public/screenshots/chat.jpg" width="300" />
+  <img src="public/preview/login.jpg" width="300" />
+  <img src="public/preview/homepage.jpg" width="300" />
+  <img src="public/preview/editing.jpg" width="300" />
+  <img src="public/preview/chat.jpg" width="300" />
 </p>
 
 ---
